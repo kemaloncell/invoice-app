@@ -13,7 +13,7 @@
 
   <hr class="bg-gradient-to-r h-[1px] border-none from-gray-700 mt-5" />
   <div class="actionbar text-right my-5">
-    <button @click="CalculatePrice"  class="purple-button">Kaydet</button>
+    <button @click="onSubmit"  class="purple-button">Kaydet</button>
   </div>
   </section>
 </template>
@@ -21,8 +21,16 @@
 import InvoiceItems from './invoiceItems.vue'
 import InvoiceSummary from "./invoiceSummary.vue";
 import ContactSection from "./contactSection.vue";
-import {reactive, provide} from "vue";
+import {reactive, provide, watch} from "vue";
 
+const props = defineProps({
+    saveInvoice: {
+        type: Function,
+        required: true
+    },
+  activeInvoices:[Object, null]
+
+})
 
 const state = reactive({
     contact: {
@@ -51,10 +59,19 @@ const DeleteInvoiceItem = (invoiceItem) => {
 }
 provide('DeleteInvoiceItem', DeleteInvoiceItem)
 
-const CalculatePrice = () => {
-
+const onSubmit = () => {
+  props.saveInvoice({...state, created_at: new Date(), id: new Date().getTime()})
+  state.contact = {}
+  state.items = []
 }
 
+
+watch(() =>props.activeInvoices, (activeInvoices) => {
+  if (activeInvoices) {
+    state.contact = {...activeInvoices.contact}
+    state.items = [...activeInvoices.items]
+  }
+})
 
 
 </script>
