@@ -6,7 +6,7 @@
   <span class="p-1 w-[100px]">Toplam</span>
   </div>
   <div class="table-body">
-  <invoice-item v-for="item in items" :key="item.id" :item="items"  :DeleteInvoiceItem="DeleteInvoiceItem" />
+  <invoice-item v-for="item in items" :key="item.id" :item="item"  />
 
   <button @click="AddInvoiceItem" class="mt-4 add-item-button">
     <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
@@ -24,9 +24,6 @@ defineProps({
     type: Array,
   },
   AddInvoiceItem: {
-    type: Function,
-  },
-  DeleteInvoiceItem: {
     type: Function,
   },
 })

@@ -21,7 +21,7 @@
 import InvoiceItems from './invoiceItems.vue'
 import InvoiceSummary from "./invoiceSummary.vue";
 import ContactSection from "./contactSection.vue";
-import {reactive} from "vue";
+import {reactive, provide} from "vue";
 
 
 const state = reactive({
@@ -37,15 +37,20 @@ const state = reactive({
 
 const AddInvoiceItem= () => {
   state.items.push({
+    id: new Date().getTime(),
     name: null,
     quantity: null,
-    unit_price: 0,
+    unit_price: 0.0,
     total_price: 0.0,
   })
 }
 
-const DeleteInvoiceItem = (index) => {
-  state.items.splice(index, 1)
+const DeleteInvoiceItem = (invoiceItem) => {
+  console.log(state.items,'before')
+  // itemlarda id 'ye göre parametre olarak gelen itema eşit olmayanları tekrar listeler, eşit olanı filtreler yani siler
+ state.items = state.items.filter(item => item.id !== invoiceItem.id)
+  console.log(state.items,'after')
 }
+provide('DeleteInvoiceItem', DeleteInvoiceItem)
 
 </script>
