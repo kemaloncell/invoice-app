@@ -3,7 +3,7 @@
 <input v-model="item.name" autocomplete="off" type="text" class="input w-[200px] mr-2" />
 <input v-model="item.quantity" autocomplete="off" type="text" class="input w-[50px] mr-2" />
 <input v-model="item.unit_price" autocomplete="off" type="text" class="input w-[100px] mr-2" />
-<span class="p-1 text-center text-gray-400">${{ totalPrice }}</span>
+<span class="p-1 text-center text-gray-400">${{ item.total_price }}</span>
 <div class="text-right flex-grow">
   <button @click="DeleteInvoiceItem(item)" class="delete-button">
     <svg xmlns="http://www.w3.org/2000/svg" class="fill-current" height="24" viewBox="0 0 24 24" width="24">
@@ -15,7 +15,7 @@
 </div>
 </template>
 <script setup>
-import { computed, inject } from "vue";
+import { computed, watch ,inject } from "vue";
 
 const props = defineProps({
   item: {
@@ -24,5 +24,8 @@ const props = defineProps({
 })
 
 const totalPrice = computed(() =>  props.item.quantity * props.item.unit_price)
+watch(totalPrice, (totalPrice) => {
+  props.item.total_price = totalPrice
+})
 const DeleteInvoiceItem = inject('DeleteInvoiceItem')
 </script>

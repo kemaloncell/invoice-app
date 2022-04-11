@@ -9,11 +9,11 @@
 
   </div>
   <!-- Summary -->
-    <invoice-summary />
+    <invoice-summary :items="state.items" />
 
   <hr class="bg-gradient-to-r h-[1px] border-none from-gray-700 mt-5" />
   <div class="actionbar text-right my-5">
-    <button class="purple-button">Kaydet</button>
+    <button @click="CalculatePrice"  class="purple-button">Kaydet</button>
   </div>
   </section>
 </template>
@@ -46,11 +46,15 @@ const AddInvoiceItem= () => {
 }
 
 const DeleteInvoiceItem = (invoiceItem) => {
-  console.log(state.items,'before')
   // itemlarda id 'ye göre parametre olarak gelen itema eşit olmayanları tekrar listeler, eşit olanı filtreler yani siler
  state.items = state.items.filter(item => item.id !== invoiceItem.id)
-  console.log(state.items,'after')
 }
 provide('DeleteInvoiceItem', DeleteInvoiceItem)
+
+const CalculatePrice = () => {
+
+}
+
+
 
 </script>
